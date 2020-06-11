@@ -4,23 +4,45 @@ import './Item.css'
 class Item extends React.Component{
     constructor(props){
         super(props);
+
         this.state = {
+            title: '',
+            image: '',
+            rating: 1,
             stars: []
         };
     }
+
     componentDidMount() {
         this.setState({
+            id: this.props.id,
+            title: this.props.title,
+            image: this.props.image,
+            rating: parseInt(this.props.rating),
             stars: Array(parseInt(this.props.rating)).fill(0)
         });
     }
+
+    onChangeRating = e => {
+        const rating = parseInt(e.target.value);
+
+        this.setState({
+            rating: rating,
+            stars: Array(parseInt(e.target.value)).fill(0)
+        });
+    };
+
+    onremove = e => {
+        this.props.onremove(this.props.id);
+    };
 
     render() {
         return(
             <div className="item">
                 <div className="image">
-                    <img src={'img/' + this.props.image} width='100%' alt="book-cover"/>
+                    <img src={'img/' + this.state.image} width='100%' alt="book-cover"/>
                 </div>
-                <div className="title">{this.props.title}</div>
+                <div className="title">{this.state.title}</div>
                 <div className="rating">
                     <p>
                         {
@@ -30,7 +52,7 @@ class Item extends React.Component{
                         }
                     </p>
                     Rating:
-                    <select value={this.props.rating}>
+                    <select value={this.state.rating} onChange={this.onChangeRating}>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -39,7 +61,7 @@ class Item extends React.Component{
                     </select>
                 </div>
                 <div className="actions">
-                    <button>Erase</button>
+                    <button onClick={this.onremove}>Erase</button>
                 </div>
             </div>
         );

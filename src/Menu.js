@@ -27,7 +27,7 @@ class Menu extends React.Component {
                         {this.props.title}
                     </div>
                     <div className="search">
-                        <Search />
+                        <Search onsearch={this.props.onsearch} />
                     </div>
                     <div className="actions">
                         <button onClick={this.add} className="button btn-blue">
@@ -37,7 +37,7 @@ class Menu extends React.Component {
                 </div>
                 {
                     (this.state.newItemPanel)?
-                        <PanelAdd onCancel={this.onCancel} />
+                        <PanelAdd onCancel={this.onCancel} onadd={this.props.onadd} />
                         :
                         ''
                 }
